@@ -101,7 +101,11 @@ func statement(tmpl string, args []driver.NamedValue) string {
 		} else {
 			re = regexp.MustCompile(fmt.Sprintf("@p%d%s", arg.Ordinal, `\b`))
 		}
-		val := fmt.Sprintf("%v", arg.Value)
+		formatStr := "%v"
+		if _, ok := arg.Value.(string); ok {
+			formatStr = "'%v'"
+		}
+		val := fmt.Sprintf(formatStr, arg.Value)
 		stmt = re.ReplaceAllString(stmt, val)
 	}
 	return stmt
