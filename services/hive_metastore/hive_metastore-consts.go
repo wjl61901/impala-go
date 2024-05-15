@@ -11,7 +11,7 @@ import (
 	thrift "github.com/apache/thrift/lib/go/thrift"
 	"strings"
 	"regexp"
-	"github.com/bippio/go-impala/services/fb303"
+	"github.com/sclgo/impala/services/fb303"
 
 )
 

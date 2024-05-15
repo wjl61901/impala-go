@@ -1,4 +1,4 @@
-module github.com/bippio/go-impala
+module github.com/sclgo/impala
 
 go 1.12
 
