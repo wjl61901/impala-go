@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 	thrift "github.com/apache/thrift/lib/go/thrift"
-	"github.com/sclgo/impala/services/fb303"
-	"github.com/sclgo/impala/services/hive_metastore"
+	"github.com/sclgo/impala-go/services/fb303"
+	"github.com/sclgo/impala-go/services/hive_metastore"
 )
 
 var _ = fb303.GoUnusedProtection__

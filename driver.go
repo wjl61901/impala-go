@@ -15,8 +15,8 @@ import (
 	"strings"
 
 	"github.com/apache/thrift/lib/go/thrift"
-	"github.com/sclgo/impala/hive"
-	"github.com/sclgo/impala/sasl"
+	"github.com/sclgo/impala-go/hive"
+	"github.com/sclgo/impala-go/sasl"
 )
 
 var (

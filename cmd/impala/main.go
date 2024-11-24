@@ -15,7 +15,7 @@ import (
 	"syscall"
 	"time"
 
-	impala "github.com/sclgo/impala"
+	impala "github.com/sclgo/impala-go"
 )
 
 func main() {

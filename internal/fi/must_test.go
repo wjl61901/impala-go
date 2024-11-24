@@ -2,7 +2,7 @@ package fi_test
 
 import (
 	"errors"
-	"github.com/sclgo/impala/internal/fi"
+	"github.com/sclgo/impala-go/internal/fi"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

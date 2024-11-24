@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/sclgo/impala/services/cli_service"
+	"github.com/sclgo/impala-go/services/cli_service"
 )
 
 type TableSchema struct {

@@ -11,7 +11,7 @@ contributions are welcome.
 
 ## Install
 
-go get github.com/sclgo/impala
+go get github.com/sclgo/impala-go
 
 
 ## Connection Parameters and DSN
@@ -68,7 +68,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/sclgo/impala"
+	"github.com/sclgo/impala-go"
 )
 
 func main() {

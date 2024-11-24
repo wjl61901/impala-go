@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/sclgo/impala/internal/fi"
+	"github.com/sclgo/impala-go/internal/fi"
 	"github.com/stretchr/testify/require"
 	"net"
 	"net/url"
