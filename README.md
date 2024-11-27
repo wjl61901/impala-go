@@ -82,7 +82,7 @@ To connect to Impala in interactive mode, run:
 
 In that command, DSN is a connection string in the format shown above. Note that the DSN itself starts with `impala:`.
 
-For example, to run `show tables` in an Impala instance on localhost, use:
+For example, to run `show databases` in an Impala instance on localhost, use:
 
 ```bash
 ./usql impala:impala://localhost -c "show databases"
