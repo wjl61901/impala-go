@@ -4,15 +4,20 @@
 
 This driver started as a fork of [github.com/bippio/go-impala](https://github.com/bippio/go-impala),
 which hasn't been updated in over four years and appears to be abandoned.
-After fork, several issues have been fixed.
+Several issues have been fixed since.
 
 The current implementation of the driver is based on the Hive Server 2 protocol. Issues and 
 contributions are welcome. 
 
 ## Install
 
-go get github.com/sclgo/impala-go
+Add `impala-go` to our Go module:
 
+```bash
+go get github.com/sclgo/impala-go
+```
+
+Alternatively, see below how to use as a CLI.
 
 ## Connection Parameters and DSN
 
@@ -56,7 +61,34 @@ Also, you can bypass string-base data source name by using sql.OpenDB:
 ```
 
 
-## Example
+## Try out with as a CLI
+
+`impala-go` is compatible with [xo/usql](https://github.com/xo/usql) - the universal SQL CLI, 
+inspired by [psql](https://www.postgresql.org/docs/current/app-psql.html). 
+Since `impala-go` is not yet included in `usql` by default, you need a Go 1.21+ runtime to build a bundle
+from source with [usqlgen](https://github.com/sclgo/usqlgen).
+
+To build the CLI, run:
+
+```bash
+go run github.com/sclgo/usqlgen@latest build --import github.com/sclgo/impala-go -- -tags no_base
+```
+
+To connect to Impala in interactive mode, run:
+
+```bash
+./usql impala:DSN
+```
+
+In that command, DSN is a connection string in the format shown above. Note that the DSN itself starts with `impala:`.
+
+For example, to run `show tables` in an Impala instance on localhost, use:
+
+```bash
+./usql impala:impala://localhost -c "show databases"
+```
+
+## Example Go code
 
 ```go
 package main
