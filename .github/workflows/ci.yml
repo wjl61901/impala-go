@@ -10,8 +10,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  build:
+  common-ci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -19,10 +18,25 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.21'
+        go-version: '1.23'
 
     - name: Build
       run: go build -v ./...
 
     - name: Test
       run: go test -v -vet=all ./...
+
+  post-merge:
+    runs-on: ubuntu-latest
+    needs: common-ci
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'
+
+      - name: Test CLI
+        run: make test-cli
