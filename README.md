@@ -6,8 +6,7 @@ This driver started as a fork of [github.com/bippio/go-impala](https://github.co
 which hasn't been updated in over four years and appears to be abandoned.
 Several issues have been fixed since.
 
-The current implementation of the driver is based on the Hive Server 2 protocol. Issues and 
-contributions are welcome. 
+![Tests](https://github.com/sclgo/impala-go/actions/workflows/ci.yml/badge.svg)
 
 ## Install
 
