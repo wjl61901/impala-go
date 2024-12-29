@@ -10,7 +10,7 @@ Several issues have been fixed since.
 
 ## Install
 
-Add `impala-go` to our Go module:
+Add `impala-go` to your Go module:
 
 ```bash
 go get github.com/sclgo/impala-go
