@@ -7,6 +7,7 @@ which hasn't been updated in over four years and appears to be abandoned.
 Several issues have been fixed since.
 
 ![Tests](https://github.com/sclgo/impala-go/actions/workflows/ci.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sclgo/impala-go)](https://goreportcard.com/report/github.com/sclgo/impala-go)
 
 ## Install
 
