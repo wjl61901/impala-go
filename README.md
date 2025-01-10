@@ -6,9 +6,10 @@ This driver started as a fork of [github.com/bippio/go-impala](https://github.co
 which hasn't been updated in over four years and appears to be abandoned.
 Several issues have been fixed since - some [quite severe](https://github.com/sclgo/impala-go/pulls?q=is%3Apr+is%3Aclosed+label%3Abug).
 
-![Tests](https://github.com/sclgo/impala-go/actions/workflows/ci.yml/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/sclgo/impala-go)](https://goreportcard.com/report/github.com/sclgo/impala-go)
 [![Go Reference](https://pkg.go.dev/badge/github.com/sclgo/impala-go.svg)](https://pkg.go.dev/github.com/sclgo/impala-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sclgo/impala-go)](https://goreportcard.com/report/github.com/sclgo/impala-go)
+[![Tests](https://github.com/sclgo/impala-go/actions/workflows/ci.yml/badge.svg)](https://coveralls.io/github/sclgo/impala-go)
+[![Coverage Status](https://coveralls.io/repos/github/sclgo/impala-go/badge.svg)](https://coveralls.io/github/sclgo/impala-go)
 
 ## Install
 
