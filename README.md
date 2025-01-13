@@ -1,6 +1,6 @@
 # Golang Apache Impala Driver 
 
-**Apache Impala driver for Go's [database/sql](https://golang.org/pkg/database/sql) package**
+**The actively supported Apache Impala driver for Go's [database/sql](https://golang.org/pkg/database/sql) package**
 
 This driver started as a fork of [github.com/bippio/go-impala](https://github.com/bippio/go-impala),
 which hasn't been updated in over four years and appears to be abandoned.
