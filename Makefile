@@ -21,7 +21,7 @@ test:
 	# Use the new binary format to ensure integration tests and cross-package calls are counted towards coverage
 	# https://go.dev/blog/integration-test-coverage
 	# -coverpkg can't be ./... because that will include generated code in the stats
-	go test -race -cover -coverpkg "${PKGS_LST}" -v -vet=all ${PKGS} -args -test.gocoverdir="${PWD}/coverage/covdata"
+	go test -race -cover -covermode atomic -coverpkg "${PKGS_LST}" -v -vet=all ${PKGS} -args -test.gocoverdir="${PWD}/coverage/covdata"
 	go tool covdata percent -i=./coverage/covdata
 	# Convert to old text format for coveralls upload
 	go tool covdata textfmt -i=./coverage/covdata -o ./coverage/covprofile
