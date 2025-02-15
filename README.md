@@ -161,7 +161,7 @@ Check out also [an open data end-to-end demo](compose/README.md).
 
 ## Support
 
-The library is actively tested with Impala 4.1 and 3.4.
+The library is actively tested with Impala 4.4 and 3.4.
 All 3.x and 4.x minor versions should work well. 2.x is also supported
 on a best-effort basis.
 
