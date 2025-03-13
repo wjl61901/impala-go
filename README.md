@@ -62,7 +62,7 @@ Also, you can bypass string-base data source name by using sql.OpenDB:
   opts.Password = password
 
   connector := impala.NewConnector(&opts)
-  db := sql.OpenDB(connector)
+  db, err := sql.OpenDB(connector)
 ```
 
 
