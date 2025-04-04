@@ -4,11 +4,31 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"io"
 
 	"github.com/apache/thrift/lib/go/thrift"
 )
+
+type AuthError struct {
+	username       string
+	transportError error
+}
+
+// Error implements error
+func (e *AuthError) Error() string {
+	// message does not start with "impala: " because this error is expected to be wrapped
+	// in a chain, reflecting the process during which the auth. error occurred.
+	return fmt.Sprintf("authentication failed for user %s", e.username)
+}
+
+// Unwrap implements support for error.Is / As
+func (e *AuthError) Unwrap() error {
+	return e.transportError
+}
+
+var _ error = (*AuthError)(nil)
 
 type TSaslTransport struct {
 	rbuf *bytes.Buffer
@@ -60,16 +80,16 @@ func (t *TSaslTransport) Open() error {
 	}
 
 	if err := t.negotiationSend(StatusStart, []byte(mech)); err != nil {
-		return fmt.Errorf("sasl: negotiation failed. %v", err)
+return fmt.Errorf("sasl: negotiation failed for mech %s. %w", mech, err)
 	}
 	if err := t.negotiationSend(StatusOK, initial); err != nil {
-		return fmt.Errorf("sasl: negotiation failed. %v", err)
+return fmt.Errorf("sasl: negotiation failed for mech %s. %w", mech, err)
 	}
 
 	for {
 		status, challenge, err := t.receive()
 		if err != nil {
-			return fmt.Errorf("sasl: negotiation failed. %v", err)
+return fmt.Errorf("sasl: negotiation failed for mech %s. %w", mech, err)
 		}
 
 		if status != StatusOK && status != StatusComplete {
@@ -82,10 +102,10 @@ func (t *TSaslTransport) Open() error {
 
 		payload, _, err := t.sasl.Step(challenge)
 		if err != nil {
-			return fmt.Errorf("sasl: negotiation failed. %v", err)
+return fmt.Errorf("sasl: negotiation failed for mech %s. %w", mech, err)
 		}
 		if err := t.negotiationSend(StatusOK, payload); err != nil {
-			return fmt.Errorf("sasl: negotiation failed. %v", err)
+return fmt.Errorf("sasl: negotiation failed for mech %s. %w", mech, err)
 		}
 
 	}
@@ -182,6 +202,12 @@ func (t *TSaslTransport) receive() (Status, []byte, error) {
 	header := make([]byte, 5)
 	_, err := t.trans.Read(header)
 	if err != nil {
+		var transportError thrift.TTransportException
+		if errors.As(err, &transportError) {
+			if transportError.TypeId() == thrift.END_OF_FILE {
+				return 0, nil, t.sasl.InterpretReceiveEOF(err)
+			}
+		}
 		return 0, nil, err
 	}
 	return Status(header[0]), header[1:], nil

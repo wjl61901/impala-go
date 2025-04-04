@@ -21,10 +21,21 @@ import (
 	"github.com/sclgo/impala-go/internal/sasl"
 )
 
+// Sentinel errors that don't carry instance information
+
 var (
 	// ErrNotSupported means this operation is not supported by impala driver
 	ErrNotSupported = isql.ErrNotSupported
 )
+
+// The following errors carry instance information so they are types, instead of sentinel values.
+
+// AuthError indicates that there was an authentication or authorization failure.
+// The error message documents the username that was used, if any.
+// errors.Unwrap() returns the underlying error that was interpreted as auth. failure, if any.
+// This error will not be top-level in the chain - earlier errors in the chain
+// reflect the process during which the auth. error happened.
+type AuthError = sasl.AuthError
 
 const (
 	badDSNErrorPrefix = "impala: bad DSN: "
@@ -36,6 +47,7 @@ type Driver struct{}
 // Open creates new connection to impala using the given data source name. Implements driver.Driver.
 // Returned error wraps any errors coming from thrift or stdlib - typically crypto or net packages.
 // If TLS is requested, and server certificate fails validation, error chain includes *tls.CertificateVerificationError
+// If there was an authentication error, error chain includes one of the exported auth. errors in this package.
 func (d *Driver) Open(dsn string) (driver.Conn, error) {
 	opts, err := parseURI(dsn)
 	if err != nil {
@@ -239,9 +251,7 @@ func configureTransport(opts *Options) (thrift.TTransport, *tls.Config, error) {
 			return nil, nil, errors.New("provide username for LDAP auth")
 		}
 
-		if opts.Password == "" {
-			return nil, nil, errors.New("provide password for LDAP auth")
-		}
+		// Empty password will be used if not provided.
 
 		transport, err = sasl.NewTSaslTransport(socket, &sasl.Options{
 			Host:     opts.Host,
