@@ -66,32 +66,28 @@ Also, you can bypass string-base data source name by using sql.OpenDB:
 ```
 
 
-## Try out with as a CLI
+## CLI
 
-`impala-go` is compatible with [xo/usql](https://github.com/xo/usql) - the universal SQL CLI, 
+`impala-go` is included in [xo/usql](https://github.com/xo/usql) - the universal SQL CLI, 
 inspired by [psql](https://www.postgresql.org/docs/current/app-psql.html). 
-Since `impala-go` is not yet included in `usql` by default, you need a Go 1.21+ runtime to build a bundle
-from source with [usqlgen](https://github.com/sclgo/usqlgen).
 
-To build the CLI, run:
+[Install](https://github.com/xo/usql?tab=readme-ov-file#installing) `usql`, start it, then on its prompt, run:
 
-```bash
-go run github.com/sclgo/usqlgen@latest build --import github.com/sclgo/impala-go -- -tags no_base
+```shell
+\connect impala DSN
 ```
 
-To connect to Impala in interactive mode, run:
+where DSN is a data source name in the format above. Review the `usql` [documentation](https://github.com/xo/usql#readme)
+for other options.
+
+The latest version of `usql` typically comes with the latest version of `impala-go` but if you need to use a different one,
+you can prepare a custom build using [usqlgen](https://github.com/sclgo/usqlgen). For example, the following command
+builds a `usql` binary in the working directory using `impala-go` from `master` branch:
 
 ```bash
-./usql impala:DSN
+go run github.com/sclgo/usqlgen@latest build --get github.com/sclgo/impala-go@master -- -tags impala
 ```
 
-In that command, DSN is a connection string in the format shown above. Note that the DSN itself starts with `impala:`.
-
-For example, to run `show databases` in an Impala instance on localhost, use:
-
-```bash
-./usql impala:impala://localhost -c "show databases"
-```
 
 ## Example Go code
 
