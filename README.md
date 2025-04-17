@@ -6,7 +6,8 @@
 
 This driver started as a fork of [github.com/bippio/go-impala](https://github.com/bippio/go-impala),
 which hasn't been updated in over four years and appears to be abandoned.
-Several issues have been fixed since - some [quite severe](https://github.com/sclgo/impala-go/pulls?q=is%3Apr+is%3Aclosed+label%3Abug).
+Several issues have been fixed since then —
+some [quite severe](https://github.com/sclgo/impala-go/pulls?q=is%3Apr+is%3Aclosed+label%3Abug).
 The original codebase also didn't support Go modules.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/sclgo/impala-go.svg)](https://pkg.go.dev/github.com/sclgo/impala-go)
@@ -26,11 +27,14 @@ Alternatively, see below how to use as a CLI.
 
 ## Connection Parameters and DSN
 
-The connection string uses a URL format: impala://username:password@host:port?param1=value&param2=value
+The data source name (DSN; connection string) uses a URL format:
+`impala://username:password@host:port?param1=value&param2=value`
+
+Driver name is `impala`.
 
 ### Parameters:
 
-* `auth` - string. Authentication mode. Supported values: "noauth", "ldap"
+* `auth` - string. Authentication mode. Supported values: `noauth`, `ldap`.
 * `tls` - boolean. Enable TLS
 * `ca-cert` - The file that contains the public key certificate of the CA that signed the Impala certificate
 * `batch-size` - integer value (default: 1024). Maximum number of rows fetched per request
@@ -52,7 +56,7 @@ A string of this format can be constructed using the URL type in the net/url pac
   db, err := sql.Open("impala", u.String())
 ```
 
-Also, you can bypass string-base data source name by using sql.OpenDB:
+Also, you can bypass the string-based data source name by using sql.OpenDB:
 
 ```go
   opts := impala.DefaultOptions
@@ -161,7 +165,7 @@ The library is actively tested with Impala 4.4 and 3.4.
 All 3.x and 4.x minor versions should work well. 2.x is also supported
 on a best-effort basis.
 
-File any issues that you encounter as Github issues.
+File any issues that you encounter as GitHub issues.
 
 ## Copyright and acknowledgements
 
