@@ -51,12 +51,22 @@ func (op *Operation) GetResultSetMetadata(ctx context.Context) (*TableSchema, er
 	if resp.IsSetSchema() {
 		for _, desc := range resp.Schema.Columns {
 			entry := desc.TypeDesc.Types[0].PrimitiveEntry
-
+			typeQualifiers := map[string]*cli_service.TTypeQualifierValue{}
+			if entry.TypeQualifiers != nil {
+				typeQualifiers = (*entry.TypeQualifiers).Qualifiers
+			}
 			dbtype := strings.TrimSuffix(entry.Type.String(), "_TYPE")
+			maxLength, hasLength := getMaxLength(typeQualifiers)
+			precision, scale, hasPrecisionScale := getPrecisionScale(typeQualifiers)
 			schema.Columns = append(schema.Columns, &ColDesc{
-				Name:             desc.ColumnName,
-				DatabaseTypeName: dbtype,
-				ScanType:         typeOf(entry),
+				Name:              desc.ColumnName,
+				DatabaseTypeName:  dbtype,
+				ScanType:          typeOf(entry),
+				HasLength:         hasLength,
+				Length:            maxLength,
+				Precision:         precision,
+				Scale:             scale,
+				HasPrecisionScale: hasPrecisionScale,
 			})
 		}
 
@@ -205,4 +215,24 @@ func sleep(ctx context.Context, d time.Duration) {
 	case <-ctx.Done():
 	case <-time.After(d): // before Go 1.23, this risked leaking memory but not anymore
 	}
+}
+
+func getMaxLength(typeQualifiers map[string]*cli_service.TTypeQualifierValue) (int64, bool) {
+	lengthQualifier := typeQualifiers["characterMaximumLength"]
+	if lengthQualifier == nil {
+		return 0, false
+	}
+	return int64(lengthQualifier.GetI32Value()), true
+}
+
+func getPrecisionScale(qualifiers map[string]*cli_service.TTypeQualifierValue) (int64, int64, bool) {
+	precisionQ := qualifiers["precision"]
+	if precisionQ == nil {
+		return 0, 0, false
+	}
+	scaleQ := qualifiers["scale"]
+	if scaleQ == nil {
+		return 0, 0, false
+	}
+	return int64(precisionQ.GetI32Value()), int64(scaleQ.GetI32Value()), true
 }
