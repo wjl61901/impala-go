@@ -36,12 +36,13 @@ jobs:
       env:
         COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
       run: go run github.com/mattn/goveralls@latest -coverprofile=./coverage/covprofile -service=github
+      continue-on-error: true
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
       with:
         name: code-coverage-report-${{ matrix.go-version }}
-        path: ./coverage/coverage.html
+        path: ./coverage/coverage.html      
 
   ci-124:
     runs-on: ubuntu-latest
