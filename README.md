@@ -212,6 +212,14 @@ The library is *not* compatible with [TinyGo](https://tinygo.org/) because
 Thrift for Go requires [tls.Listen](https://pkg.go.dev/crypto/tls#Listen) which is not implemented by TinyGo at this
 time.
 
+## Versioning
+
+The library follows semantic versioning, as specified in [SemVer 2.0.0](https://semver.org/),
+and will use semantic import versioning ([SIV](https://research.swtch.com/vgo-import)), if a 2.0 version is ever needed.
+
+[gorelease tool](https://pkg.go.dev/golang.org/x/exp/cmd/gorelease) is included in CI to
+automate detection of most semantic versioning violations.
+
 ## Copyright and acknowledgements
 
 This library started as a fork of [github.com/bippio/go-impala](https://github.com/bippio/go-impala),
