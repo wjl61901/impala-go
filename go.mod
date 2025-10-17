@@ -1,4 +1,4 @@
-module github.com/sclgo/impala-go
+module github.com/wjl61901/impala-go
 
 go 1.23.6
 
