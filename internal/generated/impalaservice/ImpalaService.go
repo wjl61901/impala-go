@@ -1525,7 +1525,7 @@ func (p *ImpalaHiveServer2ServiceClient) CloseImpalaOperation(ctx context.Contex
 	_args10.Req = req
 	var _result12 ImpalaHiveServer2ServiceCloseImpalaOperationResult
 	var _meta11 thrift.ResponseMeta
-	_meta11, _err = p.Client_().Call(ctx, "CloseImpalaOperation", &_args10, &_result12)
+	_meta11, _err = p.Client_().Call(ctx, "CloseOperation", &_args10, &_result12)
 	p.SetLastResponseMeta_(_meta11)
 	if _err != nil {
 		return
