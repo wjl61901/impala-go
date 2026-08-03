@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/apache/thrift/lib/go/thrift"
+	"github.com/murfffi/gorich/helperr"
 	"github.com/samber/lo"
 	"github.com/sclgo/impala-go/internal/hive"
 )
@@ -32,6 +33,10 @@ func mapErr(err error) error {
 	}
 
 	if isOSBadConn(err) {
+		return wrapBadConn(err)
+	}
+
+	if helperr.ContainsAny(err, "read tcp", "i/o timeout", "broken pipe", "connection reset by peer", "connection was aborted") {
 		return wrapBadConn(err)
 	}
 
